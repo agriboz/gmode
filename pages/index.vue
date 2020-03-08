@@ -1,16 +1,19 @@
-/* eslint-disable vue/valid-v-for */
+/* eslint-disable */
 <template>
   <div class="container">
     <div class="row">
       <div
         v-for="k in kuponlar"
+        :key="k.id"
         class="col-md-3"
         style="border: 1px solid green"
       >
         <h2>{{ k.name }}</h2>
         <p>{{ k.desc }}</p>
         <select v-model="selectedRule">
-          <option v-for="r in rules" :value="r"> {{ r.name }} </option>
+          <option v-for="r in rules" :key="r.id" :value="r">
+            {{ r.name }}
+          </option>
         </select>
         {{ carp(k.oranlar) > 1 ? carp(k.oranlar) : 0 }}
         {{ k.oranlar }}
@@ -20,16 +23,20 @@
 
     <div class="row">
       <div class="col-md-6">
-        <div v-for="e in events">
+        <div v-for="e in events" :key="e.id">
           {{ e.matchName }}
-          <span v-for="o in e.oranlar" @click="modaliAc(o)"> {{ o }} </span>
+          <span v-for="o in e.oranlar" :key="o" @click="modaliAc(o)">
+            {{ o }}
+          </span>
         </div>
       </div>
     </div>
     <b-modal v-if="secilenOran" v-model="modal" :title="secilenOran" @ok="ekle">
       {{ selectedKupon }}
       <select v-model="selectedKupon">
-        <option v-for="k in kuponlar" :value="k"> {{ k.name }} </option>
+        <option v-for="k in kuponlar" :key="k.id" :value="k">
+          {{ k.name }}
+        </option>
       </select>
     </b-modal>
   </div>
